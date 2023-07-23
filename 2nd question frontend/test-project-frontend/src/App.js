@@ -1,35 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import { Spinner, Flex } from '@chakra-ui/react'
 import { userFun } from './userfun';
 import Home from './Home';
+import Trains from './Trains';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  //getting data from authors table in supabse
   useEffect(() => { 
+    const accessCode = localStorage.getItem('accessCode');
     const fetchCode = async () => {
-      const order = await userFun('getAccessToken', {}, {});
       
-      if(order.status === 200) {
-        console.log(order.data)
-        localStorage.setItem('accessCode', JSON.stringify(order.data));
+      const res = await fetch('http://192.168.136.3:5000/api/getToken', {
+              method: "POST",
+        });
 
-      }else {
-        alert("Something went wrong")   
-      }
+        if(res) {
+            const json = await res.json();  
+            localStorage.setItem('accessCode', json.access_token);
+            console.log(json)
+        } else {
+            console.log(res);
+        }
     }
-    fetchCode()
+    !accessCode && fetchCode()
+    setLoading(false)
   }, [])
 
-  return (
-      <div>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-        </Routes>
-      </div>
-  );
+  if(loading === true) {
+    return <Flex flex={1} justifyContent={'center'} alignItems={'center'}>
+      <Spinner mt={10} />
+    </Flex>
+  }else {
+    return (
+        <div>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/trains" element={<Trains />} />
+          </Routes>
+        </div>
+    );
+
+  }
 }
 
 export default App;

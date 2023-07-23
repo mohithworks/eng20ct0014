@@ -36,7 +36,7 @@ async function getAccessToken() {
     return result;
 }
 
-app.post("/api/getAccessToken", async (req, res) => { 
+app.post("/api/getToken", async (req, res) => { 
     var result = await getAccessToken();
 
     if(result.data) { 
@@ -71,7 +71,7 @@ function checkDeparture(currentHour, currentMin, trainHour, trainMin) {
 }
   
 
-async function sortDetials(trains) {
+async function sortDetials(trians) {
 
     var now = new Date();
     var currentHour = now.getHours();
@@ -105,6 +105,7 @@ app.post("/api/getTrainDetails", async (req, res) => {
     };
     result = await getTrainDetails(req.body.accessCode);
 
+    console.log(result)
     if(result.data && !result.data.message) { 
         console.log(result.data);
         var sortedTrains = await sortDetials(result.data);

@@ -1,12 +1,9 @@
-
-export const userFun = async (urlPath, body, headers) => { 
-    const BACKEND_URL = 'http://192.168.136.3:5000/api/';
+export const userFun = async (urlPath, otherContent) => { 
+    const BACKEND_URL = 'https://ad13-2409-40f2-103c-526f-dda0-3384-5577-6576.ngrok-free.app/api/';
     const url = BACKEND_URL + urlPath;
 
     const res = await fetch(url, {
         method: "POST",
-        headers: headers,
-        body: JSON.stringify(body)
     });
 
     if(res) {
