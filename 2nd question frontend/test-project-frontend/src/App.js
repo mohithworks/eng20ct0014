@@ -13,7 +13,7 @@ function App() {
     const accessCode = localStorage.getItem('accessCode');
     const fetchCode = async () => {
       
-      const res = await fetch('http://192.168.136.3:5000/api/getToken', {
+      const res = await fetch('https://bad3-2409-40f2-103c-526f-dda0-3384-5577-6576.ngrok-free.app/api/getToken', {
               method: "POST",
         });
 

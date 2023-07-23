@@ -18,13 +18,14 @@ function Trains() {
   const [loading, setLoading] = useState(true);
   const [trains, setTrains] = useState([]);
 
+  //getting data from authors table in supabse
   useEffect(() => { 
     const accessCode = localStorage.getItem('accessCode');
     console.log(accessCode)
     
     const fetchTrains = async () => {
       
-      const res = await fetch('http://192.168.136.3:5000/api/getTrainDetails', {
+      const res = await fetch('https://bad3-2409-40f2-103c-526f-dda0-3384-5577-6576.ngrok-free.app/api/getTrainDetails', {
             method: 'POST',
             body: JSON.stringify({
                 accessCode: accessCode
